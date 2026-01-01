@@ -1,0 +1,53 @@
+# =================================
+# Backend (Python / FastAPI / ML)
+# =================================
+backend/__pycache__/
+backend/*.py[cod]
+backend/.Python
+backend/venv/
+backend/env/
+backend/ENV/
+
+# General Python
+__pycache__/
+*.py[cod]
+
+# =================================
+# Environment variables
+# =================================
+.env
+.env.*
+!.env.example
+
+# =================================
+# Jupyter / ML
+# =================================
+.ipynb_checkpoints/
+
+# =================================
+# Frontend (Vite / React)
+# =================================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+
+# =================================
+# Logs
+# =================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =================================
+# OS files
+# =================================
+.DS_Store
+Thumbs.db
+
+# =================================
+# IDE / Editor
+# =================================
+.vscode/
+.idea/
