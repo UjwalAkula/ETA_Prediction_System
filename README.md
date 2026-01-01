@@ -127,7 +127,7 @@ Monorepo
 ```
 
 ---
-## 🛠️ Local Setup (Optional)
+## 🛠️ Local Setup
 
 ### Backend
 
