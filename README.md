@@ -3,6 +3,7 @@
 **AI-powered delivery time estimation using Machine Learning**
 
 🔗 **Live Demo:** [https://etapredictionsystem-production.up.railway.app/](https://etapredictionsystem-production.up.railway.app/)
+
 📦 **Backend API:** [https://adaptable-trust-production-76c1.up.railway.app/docs](https://adaptable-trust-production-76c1.up.railway.app/docs)
 
 ---
@@ -126,14 +127,6 @@ Monorepo
 ```
 
 ---
-
-## 🖥️ Screenshots
-
-> Minimalistic premium UI with real-time prediction output
-> (Add screenshots here if you want later)
-
----
-
 ## 🛠️ Local Setup (Optional)
 
 ### Backend
@@ -158,28 +151,5 @@ npm run dev
 
 * **Backend:** Railway (Dockerized FastAPI service)
 * **Frontend:** Railway (Dockerized Nginx static build)
-* **Environment variables** used for production API routing
 
 ---
-
-## 💡 What This Project Demonstrates
-
-* End-to-end ML system design
-* Real-world feature engineering
-* Proper ML pipelines (no data leakage)
-* Production-ready deployment with Docker
-* Clean frontend–backend separation
-* Industry-style project structure
-
----
-
-## 📈 Future Improvements
-
-* Add live traffic & weather APIs
-* Use time-series data for demand patterns
-* Model monitoring & drift detection
-* Confidence intervals for ETA predictions
-* Admin dashboard for analytics
-
----
-
