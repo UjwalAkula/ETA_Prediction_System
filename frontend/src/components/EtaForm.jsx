@@ -6,15 +6,18 @@ const EtaForm = () => {
     distance_km: "",
     preparation_time_min: "",
     courier_experience_yrs: "",
-    weather: "Sunny",
-    traffic_level: "Low",
-    time_of_day: "Morning",
-    vehicle_type: "Bike",
+    weather: "",
+    traffic_level: "",
+    time_of_day: "",
+    vehicle_type: "",
   });
 
   const [eta, setEta] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const API_URL =
+    import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,46 +26,38 @@ const EtaForm = () => {
   const handleSubmit = async () => {
     setError("");
     setEta(null);
-    
+
     if (
       !formData.distance_km ||
       !formData.preparation_time_min ||
       !formData.courier_experience_yrs
     ) {
-      setError(
-        "Please enter valid distance, preparation time, and courier experience."
-      );
+      setError("Please fill all required fields.");
       return;
     }
 
     setLoading(true);
-
-    const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
     try {
       const response = await fetch(`${API_URL}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          distance_km: parseFloat(formData.distance_km),
-          preparation_time_min: parseInt(formData.preparation_time_min),
-          courier_experience_yrs: parseFloat(
-            formData.courier_experience_yrs
-          ),
+          distance_km: Number(formData.distance_km),
+          preparation_time_min: Number(formData.preparation_time_min),
+          courier_experience_yrs: Number(formData.courier_experience_yrs),
           weather: formData.weather,
           traffic_level: formData.traffic_level,
           time_of_day: formData.time_of_day,
-          vehicle_type: formData.vehicle_type,
+          vehicle_type: formData.vehicle_type, 
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Prediction failed");
-      }
+      if (!response.ok) throw new Error();
 
       const data = await response.json();
       setEta(data.predicted_delivery_time_min);
-    } catch (err) {
+    } catch {
       setError("Failed to predict ETA. Please try again.");
     } finally {
       setLoading(false);
@@ -70,120 +65,139 @@ const EtaForm = () => {
   };
 
   const inputClass =
-    "w-full border border-gray-300 rounded-xl px-4 py-3.5 text-sm text-gray-800 " +
-    "focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500";
+    "w-full border border-slate-300 rounded-lg px-4 py-3 text-sm " +
+    "focus:outline-none focus:ring-2 focus:ring-indigo-500";
+
+  const labelClass = "text-sm font-medium text-slate-700 mb-1";
 
   return (
     <div className="max-w-3xl mx-auto py-14 px-4">
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-10">
-        <h2 className="text-xl font-medium text-gray-900 text-center mb-6 tracking-wide">
+      <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-10">
+        <h2 className="text-2xl font-semibold text-slate-900 text-center mb-8">
           Delivery ETA Prediction
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
           {/* Distance */}
-          <input
-            type="number"
-            min="0.5"
-            max="50"
-            step="0.1"
-            name="distance_km"
-            placeholder="Distance (km) e.g. 5.4"
-            className={inputClass}
-            onChange={handleChange}
-          />
+          <div>
+            <label className={labelClass}>Delivery Distance (km)</label>
+            <input
+              type="number"
+              step="0.1"
+              name="distance_km"
+              placeholder="e.g. 5.4"
+              className={inputClass}
+              onChange={handleChange}
+            />
+          </div>
 
           {/* Preparation Time */}
-          <input
-            type="number"
-            min="5"
-            max="60"
-            name="preparation_time_min"
-            placeholder="Preparation time (5–60 min)"
-            className={inputClass}
-            onChange={handleChange}
-          />
+          <div>
+            <label className={labelClass}>Food Preparation Time (min)</label>
+            <input
+              type="number"
+              name="preparation_time_min"
+              placeholder="e.g. 20"
+              className={inputClass}
+              onChange={handleChange}
+            />
+          </div>
 
           {/* Courier Experience */}
-          <input
-            type="number"
-            min="0"
-            max="15"
-            step="0.5"
-            name="courier_experience_yrs"
-            placeholder="Courier experience (years)"
-            className={inputClass}
-            onChange={handleChange}
-          />
+          <div>
+            <label className={labelClass}>Courier Experience (years)</label>
+            <input
+              type="number"
+              step="0.5"
+              name="courier_experience_yrs"
+              placeholder="e.g. 3"
+              className={inputClass}
+              onChange={handleChange}
+            />
+          </div>
 
           {/* Weather */}
-          <select
-            name="weather"
-            className={inputClass}
-            onChange={handleChange}
-          >
-            <option selected disabled>Weather Condition</option>
-            <option>Sunny</option>
-            <option>Rainy</option>
-            <option>Cloudy</option>
-            <option>Foggy</option>
-          </select>
+          <div>
+            <label className={labelClass}>Weather Condition</label>
+            <select
+              name="weather"
+              value={formData.weather}
+              className={inputClass}
+              onChange={handleChange}
+            >
+              <option value="" disabled>Select weather</option>
+              <option value="Sunny">Sunny</option>
+              <option value="Rainy">Rainy</option>
+              <option value="Cloudy">Cloudy</option>
+              <option value="Foggy">Foggy</option>
+            </select>
+          </div>
 
           {/* Traffic */}
-          <select
-            name="traffic_level"
-            className={inputClass}
-            onChange={handleChange}
-          >
-            <option selected disabled>Traffic Level</option>
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
-          </select>
+          <div>
+            <label className={labelClass}>Traffic Level</label>
+            <select
+              name="traffic_level"
+              value={formData.traffic_level}
+              className={inputClass}
+              onChange={handleChange}
+            >
+              <option value="" disabled>Select traffic</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
 
           {/* Time of Day */}
-          <select
-            name="time_of_day"
-            className={inputClass}
-            onChange={handleChange}
-          >
-            <option selected disabled>Time of Day</option>
-            <option>Morning</option>
-            <option>Afternoon</option>
-            <option>Evening</option>
-            <option>Night</option>
-          </select>
+          <div>
+            <label className={labelClass}>Time of Day</label>
+            <select
+              name="time_of_day"
+              value={formData.time_of_day}
+              className={inputClass}
+              onChange={handleChange}
+            >
+              <option value="" disabled>Select time</option>
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Evening">Evening</option>
+              <option value="Night">Night</option>
+            </select>
+          </div>
 
           {/* Vehicle */}
-          <select
-            name="vehicle_type"
-            className={inputClass}
-            onChange={handleChange}
-          >
-            <option selected disabled>Vehicle</option>
-            <option>Bike</option>
-            <option>Scooter</option>
-            <option>Car</option>
-          </select>
+          <div className="md:col-span-2">
+            <label className={labelClass}>Delivery Vehicle</label>
+            <select
+              name="vehicle_type"
+              value={formData.vehicle_type}
+              className={inputClass}
+              onChange={handleChange}
+            >
+              <option value="" disabled>Select vehicle</option>
+
+              <option value="Bike">2-Wheeler (Bike)</option>
+              <option value="Scooter">2-Wheeler (Scooter)</option>
+              <option value="Car">4-Wheeler (Car)</option>
+            </select>
+          </div>
         </div>
 
-        {/* Error */}
         {error && (
           <p className="mt-4 text-sm text-red-600 text-center">{error}</p>
         )}
 
-        {/* Button */}
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="mt-8 w-full bg-indigo-600 text-white py-3.5 rounded-xl
-                     text-sm font-medium hover:bg-indigo-700
-                     transition-all shadow-sm hover:shadow-md"
+          className="mt-10 w-full bg-indigo-600 text-white py-3 rounded-lg
+                     font-medium hover:bg-indigo-700 transition"
         >
-          {loading ? "Predicting..." : "Predict ETA"}
+          {loading ? "Predicting ETA..." : "Predict ETA"}
         </button>
 
-        {/* Result */}
         <ResultCard eta={eta} />
       </div>
     </div>

@@ -4,11 +4,14 @@ import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc]">
+    <div className="min-h-screen flex flex-col bg-slate-50">
       <Navbar />
-      <main className="grow">
+
+      {/* main content */}
+      <main className="grow pt-24 pb-16">
         <EtaForm />
       </main>
+
       <Footer />
     </div>
   );
