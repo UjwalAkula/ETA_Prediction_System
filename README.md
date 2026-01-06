@@ -1,67 +1,69 @@
 ---
 
-# 🚚 ETA Prediction System
+# ETA Prediction System 🚚
 
-**Machine Learning–based Delivery Time Estimation**
+A full-stack machine learning project that predicts **delivery time (ETA in minutes)** based on real-world delivery factors.
 
-🌐 **Frontend (Live):**
+The system takes delivery details from a user interface, sends them to a backend ML service, and returns an estimated delivery time — similar to how modern logistics and food delivery platforms work.
+
+---
+
+## Live Application
+
+**Frontend:**
 [https://eta-prediction-system-frontend.onrender.com](https://eta-prediction-system-frontend.onrender.com)
 
-🔌 **Backend API (Docs):**
+**Backend API (Swagger Docs):**
 [https://eta-prediction-system-backend.onrender.com/docs](https://eta-prediction-system-backend.onrender.com/docs)
 
 ---
 
-## 📖 Project Overview
+## What This Project Does
 
-The **ETA Prediction System** is a full-stack machine learning project that predicts **delivery time (in minutes)** using multiple real-world logistics factors.
+The ETA Prediction System estimates delivery time using factors such as:
 
-The goal of this project is to simulate how modern delivery platforms like **Amazon, Swiggy, Blinkit, or Flipkart** estimate ETAs using data and machine learning models.
+* Distance of delivery
+* Order preparation time
+* Traffic conditions
+* Weather
+* Time of day
+* Courier experience
+* Vehicle type
 
-Users enter delivery details through a web interface, and the system returns a predicted delivery time powered by a trained ML model served via an API.
+The prediction is generated using a trained machine learning regression model served via a FastAPI backend.
 
 ---
 
-## ✨ Features
+## Key Features
 
-* Real-time delivery ETA prediction
+* Real-time ETA prediction
 * Machine learning–based regression model
-* Responsive frontend built with React & Tailwind CSS
-* FastAPI backend with a production-ready ML pipeline
-* Fully Dockerized application
-* Deployed as separate frontend & backend services
+* Clean and responsive UI
+* REST API built with FastAPI
+* End-to-end ML pipeline using scikit-learn
+* Fully Dockerized
+* Frontend and backend deployed as separate services
 
 ---
 
-## 🧠 Machine Learning Approach
+## Machine Learning Details
 
 ### Dataset
 
-* Synthetic food delivery dataset (inspired by Kaggle datasets)
-* 1,000+ samples
-* Combination of numerical and categorical features
+* Synthetic food delivery dataset (Kaggle-inspired)
+* 1,000+ data points
+* Mix of numerical and categorical features
 
-### Features Used
+### Preprocessing
 
-* Distance (km)
-* Preparation time (minutes)
-* Courier experience (years)
-* Weather conditions
-* Traffic level
-* Time of day
-* Vehicle type
-
-### Data Preprocessing
-
-* Missing value handling using `SimpleImputer`
+* Missing values handled using `SimpleImputer`
 * Categorical encoding:
 
-  * `OneHotEncoder`: Weather, Time of Day, Vehicle Type
-  * `OrdinalEncoder`: Traffic Level
-* All preprocessing and modeling handled using
-  **scikit-learn Pipelines & ColumnTransformer**
+  * OneHotEncoder for weather, time of day, and vehicle type
+  * OrdinalEncoder for traffic level
+* Preprocessing and model combined using `Pipeline` and `ColumnTransformer`
 
-### Models Evaluated
+### Models Tested
 
 | Model             | R² Score |
 | ----------------- | -------- |
@@ -70,17 +72,17 @@ Users enter delivery details through a web interface, and the system returns a p
 | Random Forest     | 0.79     |
 | XGBoost           | 0.78     |
 
-**Linear Regression** was chosen due to its strong performance, simplicity, and interpretability.
+Linear Regression was selected for its balance of performance, simplicity, and interpretability.
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 ### Backend
 
 * FastAPI
 * scikit-learn
-* Pandas / NumPy
+* Pandas, NumPy
 * Joblib
 * Docker
 * Render
@@ -91,29 +93,31 @@ Users enter delivery details through a web interface, and the system returns a p
 * Tailwind CSS
 * Font Awesome
 * Fetch API
+* Docker + Nginx
 * Render
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
-Monorepo
+.
+├── backend
+│   └── FastAPI app with trained ML model
 │
-├── backend   → FastAPI + ML model
-│
-└── frontend  → React + Tailwind UI
+└── frontend
+    └── React + Tailwind UI
 ```
 
-* Frontend and backend are deployed as **independent services**
-* Communication handled via environment variables (`VITE_API_URL`)
-* Each service is containerized using Docker
+* Frontend and backend run as independent services
+* API base URL configured using environment variables
+* Both services are containerized with Docker
 
 ---
 
-## 🔗 API Usage
+## API Endpoint
 
-### `POST /predict`
+### POST `/predict`
 
 **Request Example**
 
@@ -139,7 +143,7 @@ Monorepo
 
 ---
 
-## 🛠️ Running Locally
+## Running the Project Locally
 
 ### Backend
 
@@ -159,11 +163,19 @@ npm run dev
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
-* **Backend:** Render (Dockerized FastAPI service)
-* **Frontend:** Render (Dockerized Nginx static build)
+* Backend deployed on **Render** as a Dockerized FastAPI service
+* Frontend deployed on **Render** as a Dockerized Nginx static build
 
 ---
-Just tell me 👍
 
+## Future Improvements
+
+* Add real traffic and weather APIs
+* Model retraining with real delivery data
+* ETA confidence intervals
+* Authentication and request logging
+* Model monitoring and drift detection
+
+---
