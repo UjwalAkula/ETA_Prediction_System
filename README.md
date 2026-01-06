@@ -1,5 +1,3 @@
----
-
 # ETA Prediction System 🚚
 
 A full-stack machine learning project that predicts **delivery time (ETA in minutes)** based on real-world delivery factors.
@@ -12,9 +10,6 @@ The system takes delivery details from a user interface, sends them to a backend
 
 **Frontend:**
 [https://eta-prediction-system-frontend.onrender.com](https://eta-prediction-system-frontend.onrender.com)
-
-**Backend API (Swagger Docs):**
-[https://eta-prediction-system-backend.onrender.com/docs](https://eta-prediction-system-backend.onrender.com/docs)
 
 ---
 
